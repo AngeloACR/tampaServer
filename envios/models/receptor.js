@@ -7,10 +7,16 @@ const jwt = require('jsonwebtoken');
 
 module.exports.addReceptor = async function(newReceptor) {
     try {
-        let query = 'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?)';
-        let queryData = ['receptores', 'nombre', 'apellido', 'cedula', newReceptor.nombre, newReceptor.apellido, newReceptor.cedula];
+        let query = 'SELECT * FROM ?? WHERE ?? = ?';
+        let queryData = ['receptores', 'cedula', newReceptor.cedula];
         let results = await this.queryDb(query, queryData);
-        if (results[0]) {
+        if (results != 0) {
+            return 'done';
+        }
+        query = 'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?)';
+        queryData = ['receptores', 'nombre', 'apellido', 'cedula', newReceptor.nombre, newReceptor.apellido, newReceptor.cedula];
+        results = await this.queryDb(query, queryData);
+        if (results) {
 
             let response = {
                 status: true,

@@ -10,12 +10,15 @@ enviosRouter.post('/', async(req, res) => {
 
         let emisor = req.body.emisor;
         let receptor = req.body.receptor;
+        let destino = req.body.paquete.estado + ', ' + req.body.paquete.ciudad + ', ' + req.body.paquete.direccion
         let paquete = {
             cedulaEmisor: emisor.cedula,
             cedulaReceptor: receptor.cedula,
-            paquete: req.body.paquete
+            peso: req.body.paquete.peso,
+            destino: destino,
+            precio: req.body.paquete.precio
         };
-
+        console.log(paquete)
 
 
         let emisorR = await Emisor.addEmisor(emisor);

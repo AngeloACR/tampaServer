@@ -5,13 +5,13 @@ const db = require('../../database');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 
-module.exports.addEnvio = async function(newEnvio) {
+module.exports.addPaquete = async function(newEnvio) {
     try {
         let guia = await this.getGuia(newEnvio)
         let query = 'INSERT INTO ?? (??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, ?)';
-        let queryData = ['paquetes', 'emisor', 'recptor', 'peso', 'precio', 'destino', 'guia', newEnvio.cedulaEmisor, newEnvio.cedulaReceptor, newEnvio.paquete.peso, newEnvio.paquete.precio, newEnvio.paquete.destino, guia];
+        let queryData = ['paquetes', 'emisor', 'receptor', 'peso', 'precio', 'destino', 'guia', newEnvio.cedulaEmisor, newEnvio.cedulaReceptor, newEnvio.peso, newEnvio.precio, newEnvio.destino, guia];
         let results = await this.queryDb(query, queryData);
-        if (results[0]) {
+        if (results) {
 
             let response = {
                 status: true,
@@ -26,10 +26,10 @@ module.exports.addEnvio = async function(newEnvio) {
 };
 
 module.exports.getGuia = async function(newEnvio) {
-    let query = 'SELECT COUNT(*) FROM ??';
+    let query = 'SELECT COUNT(*) as total FROM ??';
     let queryData = ['paquetes'];
     let results = await this.queryDb(query, queryData);
-    return results;
+    return results[0].total;
 }
 
 module.exports.getPaquete = async function(guia) { //Need tons of work
@@ -73,12 +73,12 @@ module.exports.getPaquetes = async function() { //Need tons of work
         var i = 0;
         results.forEach(function(result) {
             uMap[i] = {
-                emisor: results.emisor,
-                receptor: results.receptor,
-                peso: results.peso,
-                precio: results.precio,
-                destino: results.destino,
-                guia: results.guia,
+                emisor: result.emisor,
+                receptor: result.receptor,
+                peso: result.peso,
+                precio: result.precio,
+                destino: result.destino,
+                guia: result.guia,
             };
             i++;
         });

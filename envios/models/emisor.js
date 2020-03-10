@@ -7,10 +7,16 @@ const jwt = require('jsonwebtoken');
 
 module.exports.addEmisor = async function(newEnvio) {
     try {
-        let query = 'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?)';
-        let queryData = ['emisores', 'nombre', 'apellido', 'cedula', newEnvio.nombre, newEnvio.apellido, newEnvio.cedula];
+        let query = 'SELECT * FROM ?? WHERE ?? = ?';
+        let queryData = ['emisores', 'cedula', newEnvio.cedula];
         let results = await this.queryDb(query, queryData);
-        if (results[0]) {
+        if (results != 0) {
+            return 'done';
+        }
+        query = 'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?)';
+        queryData = ['emisores', 'nombre', 'apellido', 'cedula', newEnvio.nombre, newEnvio.apellido, newEnvio.cedula];
+        results = await this.queryDb(query, queryData);
+        if (results) {
 
             let response = {
                 status: true,
