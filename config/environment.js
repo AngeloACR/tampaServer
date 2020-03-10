@@ -13,8 +13,8 @@ module.exports = {
     host: 'localhost',
     mysqlPort: '3306',
     mysqlUser: 'root',
-    mysqlPass: "MiNegrita47",
-    //		mysqlPass: "mysqltecnobunker",
+//    mysqlPass: "MiNegrita47",
+    		mysqlPass: "mysqltecnobunker",
     dbName: 'tampaDb',
     connectionLimit: 100
 
