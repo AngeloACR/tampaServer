@@ -54,4 +54,16 @@ module.exports.getReceptores = async function() { //Need tons of work
         throw error;
     }
 };
+
+module.exports.queryDb = async function(query, data) {
+    try {
+        let myDB = db.init();
+        let formatedQuery = mysql.format(query, data);
+        let results = await myDB.query(formatedQuery);
+
+        return results;
+    } catch (e) {
+        throw e
+    }
+};
 const Receptor = module.exports

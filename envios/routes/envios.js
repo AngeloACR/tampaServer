@@ -2,7 +2,7 @@ const express = require('express');
 const enviosRouter = express.Router();
 const Paquete = require('../models/paquete');
 const Emisor = require('../models/emisor');
-const receptor = require('../models/receptor');
+const Receptor = require('../models/receptor');
 
 //**************************** USER CRUD************************************//
 enviosRouter.post('/', async(req, res) => {
@@ -11,8 +11,8 @@ enviosRouter.post('/', async(req, res) => {
         let emisor = req.body.emisor;
         let receptor = req.body.receptor;
         let paquete = {
-            emisor: emisor.cedula,
-            receptor: receptor.cedula,
+            cedulaEmisor: emisor.cedula,
+            cedulaReceptor: receptor.cedula,
             paquete: req.body.paquete
         };
 
@@ -66,5 +66,15 @@ enviosRouter.get('/receptores', async(req, res, next) => {
     }
 
 });
+module.exports.queryDb = async function(query, data) {
+    try {
+        let myDB = db.init();
+        let formatedQuery = mysql.format(query, data);
+        let results = await myDB.query(formatedQuery);
 
+        return results;
+    } catch (e) {
+        throw e
+    }
+};
 module.exports = enviosRouter;

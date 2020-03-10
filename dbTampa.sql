@@ -9,12 +9,14 @@ USE tampaDb
 CREATE TABLE emisores (
   id int,
   nombre varchar(255),
+  apellido varchar(255),
   cedula varchar(255) PRIMARY KEY
 );
 
 CREATE TABLE receptores (
   id int,
   nombre varchar(255),
+  apellido varchar(255),
   cedula varchar(255) PRIMARY KEY
 );
 

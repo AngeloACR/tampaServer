@@ -8,9 +8,9 @@ const jwt = require('jsonwebtoken');
 module.exports.addEmisor = async function(newEnvio) {
     try {
         let query = 'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?)';
-        let queryData = ['emisores', 'nombre', 'apellido', 'cedula', newEnvio.emisor.nombre, newEnvio.emisor.apellido, newEnvio.emisor.cedula];
+        let queryData = ['emisores', 'nombre', 'apellido', 'cedula', newEnvio.nombre, newEnvio.apellido, newEnvio.cedula];
         let results = await this.queryDb(query, queryData);
-        if (resutls[0]) {
+        if (results[0]) {
 
             let response = {
                 status: true,
@@ -53,5 +53,15 @@ module.exports.getEmisores = async function() { //Need tons of work
         throw error;
     }
 };
+module.exports.queryDb = async function(query, data) {
+    try {
+        let myDB = db.init();
+        let formatedQuery = mysql.format(query, data);
+        let results = await myDB.query(formatedQuery);
 
+        return results;
+    } catch (e) {
+        throw e
+    }
+};
 const Emisor = module.exports

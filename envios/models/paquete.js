@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports.addEnvio = async function(newEnvio) {
     try {
-        let guia = this.getGuia(newEnvio)
+        let guia = await this.getGuia(newEnvio)
         let query = 'INSERT INTO ?? (??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, ?)';
-        let queryData = ['paquetes', 'emisor', 'recptor', 'peso', 'precio', 'destino', 'guia', newEnvio.cedulaEmisor, newEnvio.cedulaReceptor, newEnvio.peso, newEnvio.precio, newEnvio.destino, guia];
+        let queryData = ['paquetes', 'emisor', 'recptor', 'peso', 'precio', 'destino', 'guia', newEnvio.cedulaEmisor, newEnvio.cedulaReceptor, newEnvio.paquete.peso, newEnvio.paquete.precio, newEnvio.paquete.destino, guia];
         let results = await this.queryDb(query, queryData);
         if (results[0]) {
 
@@ -25,8 +25,11 @@ module.exports.addEnvio = async function(newEnvio) {
     }
 };
 
-module.exports.getGuia = function(newEnvio) {
-
+module.exports.getGuia = async function(newEnvio) {
+    let query = 'SELECT COUNT(*) FROM ??';
+    let queryData = ['paquetes'];
+    let results = await this.queryDb(query, queryData);
+    return results;
 }
 
 module.exports.getPaquete = async function(guia) { //Need tons of work
@@ -91,4 +94,15 @@ module.exports.getPaquetes = async function() { //Need tons of work
     }
 };
 
+module.exports.queryDb = async function(query, data) {
+    try {
+        let myDB = db.init();
+        let formatedQuery = mysql.format(query, data);
+        let results = await myDB.query(formatedQuery);
+
+        return results;
+    } catch (e) {
+        throw e
+    }
+};
 const Paquete = module.exports
