@@ -7,19 +7,19 @@ CREATE DATABASE tampaDb;
 USE tampaDb
 
 CREATE TABLE emisores (
-  id int AUTO_INCREMENT,
+  id int,
   nombre varchar(255),
   cedula varchar(255) PRIMARY KEY
 );
 
 CREATE TABLE receptores (
-  id int AUTO_INCREMENT,
+  id int,
   nombre varchar(255),
   cedula varchar(255) PRIMARY KEY
 );
 
 CREATE TABLE paquetes (
-  id int AUTO_INCREMENT,
+  id int,
   emisor varchar(255),
   receptor varchar(255),
   peso int,
