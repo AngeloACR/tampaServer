@@ -30,4 +30,4 @@ CREATE TABLE paquetes (
 
 ALTER TABLE paquetes ADD FOREIGN KEY (emisor) REFERENCES emisores (cedula);
 
-ALTER TABLE paquetes ADD FOREIGN KEY (receptores) REFERENCES receptores (cedula);
+ALTER TABLE paquetes ADD FOREIGN KEY (receptor) REFERENCES receptores (cedula);
