@@ -7,7 +7,7 @@
         "test": "npm test"
     },
     "dependencies": {
-        "async": "^2.6.0",
+        "async": "^2.6.4",
         "bcryptjs": "*",
         "body-parser": "*",
         "compression": "^1.7.0",
